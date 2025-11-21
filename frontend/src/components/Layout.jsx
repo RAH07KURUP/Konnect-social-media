@@ -1,8 +1,16 @@
 // Layout.jsx
 import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
+import { useEffect } from "react";
+import { useThemeStore } from "../store/useThemeStore";
 
 const Layout = ({ children, showSidebar = false }) => {
+    const { theme } = useThemeStore();
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+  }, [theme]);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#060519] via-[#0b1020] to-[#120922] text-gray-100">
       <div className="flex min-h-screen">

@@ -1,4 +1,3 @@
-// HomePage.jsx
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import {
@@ -54,12 +53,12 @@ const HomePage = () => {
       <div className="mx-auto max-w-6xl space-y-10">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
-            <h2 className="text-3xl font-extrabold tracking-tight text-white">Your Friends</h2>
-            <p className="text-sm text-gray-300 mt-1">Contacts you connect with frequently</p>
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-base-content">Your Friends</h2>
+            <p className="text-sm opacity-70 mt-1">Contacts you connect with frequently</p>
           </div>
 
-          <Link to="/notifications" className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#2a1240] bg-gradient-to-r from-[#0b0b12]/50 to-[#140d22]/30 hover:from-[#151026]/70 transition">
-            <UsersIcon className="h-5 w-5 text-[#7c3aed]" />
+          <Link to="/notifications" className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-base-300 bg-base-100 hover:bg-base-200 transition">
+            <UsersIcon className="h-5 w-5 text-primary" />
             Friend Requests
           </Link>
         </div>
@@ -78,12 +77,13 @@ const HomePage = () => {
           </div>
         )}
 
+        {/* Recommended users */}
         <section>
           <div className="mb-6 sm:mb-8">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div>
-                <h2 className="text-3xl font-extrabold tracking-tight text-white">Connect with New Friends</h2>
-                <p className="text-sm text-gray-300 mt-1">Find people with similar interests and start connecting.</p>
+                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-base-content">Connect with New Friends</h2>
+                <p className="text-sm opacity-70 mt-1">Find people with similar interests and start connecting.</p>
               </div>
             </div>
           </div>
@@ -93,9 +93,9 @@ const HomePage = () => {
               <span className="loading loading-spinner loading-lg" />
             </div>
           ) : recommendedUsers.length === 0 ? (
-            <div className="rounded-2xl bg-[#07102a] border border-[#1b0d2b] p-6 text-center">
-              <h3 className="font-semibold text-lg text-white mb-2">No recommendations available</h3>
-              <p className="text-gray-300">Check back later for new friends!</p>
+            <div className="rounded-2xl bg-base-200 border border-base-300 p-6 text-center">
+              <h3 className="font-semibold text-lg text-base-content mb-2">No recommendations available</h3>
+              <p className="opacity-70">Check back later for new friends!</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -105,18 +105,18 @@ const HomePage = () => {
                 return (
                   <div
                     key={user._id}
-                    className="rounded-2xl bg-[#07102a] border border-[#2a1240] hover:shadow-neon transition-all duration-200 p-5 flex flex-col justify-between"
+                    className="rounded-2xl bg-base-200 border border-base-300 hover:shadow-lg transition-all duration-200 p-5 flex flex-col justify-between"
                   >
                     <div>
                       <div className="flex items-center gap-4">
-                        <div className="w-16 h-16 rounded-full overflow-hidden ring-2 ring-[#7c3aed]/20">
+                        <div className="w-16 h-16 rounded-full overflow-hidden ring-2 ring-primary/20">
                           <img src={user.profilePic} alt={user.fullName} className="object-cover w-full h-full" />
                         </div>
 
                         <div>
-                          <h3 className="font-semibold text-lg text-white">{user.fullName}</h3>
+                          <h3 className="font-semibold text-lg text-base-content">{user.fullName}</h3>
                           {user.location && (
-                            <div className="flex items-center text-xs text-gray-300 mt-1">
+                            <div className="flex items-center text-xs opacity-70 mt-1">
                               <MapPinIcon className="h-4 w-4 mr-1 opacity-70" />
                               {user.location}
                             </div>
@@ -125,24 +125,24 @@ const HomePage = () => {
                       </div>
 
                       <div className="flex flex-wrap gap-2 mt-4">
-                        <span className="px-3 py-1 rounded-full bg-gradient-to-r from-[#7c3aed]/20 to-[#4cc9f0]/10 text-xs text-indigo-200 inline-flex items-center gap-2">
+                        <span className="px-3 py-1 rounded-full bg-primary/10 text-xs text-primary inline-flex items-center gap-2">
                           {getLanguageFlag(user.nativeLanguage)}
                           Native: {capitialize(user.nativeLanguage)}
                         </span>
 
-                        <span className="px-3 py-1 rounded-full border border-[#2a1240] text-xs text-gray-200 inline-flex items-center gap-2">
+                        <span className="px-3 py-1 rounded-full border border-base-300 text-xs text-base-content inline-flex items-center gap-2">
                           {getLanguageFlag(user.learningLanguage)}
                           Learning: {capitialize(user.learningLanguage)}
                         </span>
                       </div>
 
-                      {user.bio && <p className="text-sm text-gray-300 mt-3">{user.bio}</p>}
+                      {user.bio && <p className="text-sm opacity-70 mt-3">{user.bio}</p>}
                     </div>
 
                     <div className="mt-4">
                       <button
                         className={`w-full px-4 py-3 rounded-lg text-sm font-medium transition ${
-                          hasRequestBeenSent ? "bg-white/6 text-gray-300 cursor-default" : "bg-gradient-to-r from-[#7c3aed] to-[#ff4d9d] text-white shadow-md hover:opacity-95"
+                          hasRequestBeenSent ? "bg-base-200 text-opacity-70 cursor-default" : "btn btn-primary"
                         }`}
                         onClick={() => sendRequestMutation(user._id)}
                         disabled={hasRequestBeenSent || isPending}
