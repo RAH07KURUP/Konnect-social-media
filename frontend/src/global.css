@@ -1,0 +1,45 @@
+/* global.css - Neon Cyber UI helpers (load AFTER tailwind/daisyui) */
+
+:root {
+  --neon-glow-1: 0 10px 40px rgba(124,58,237,0.18);
+  --neon-glow-2: 0 6px 18px rgba(255,77,157,0.08);
+}
+
+/* neon shadow */
+.shadow-neon {
+  box-shadow: var(--neon-glow-1), var(--neon-glow-2);
+}
+
+/* smooth theme transition */
+[data-theme] {
+  transition: background-color 220ms ease, color 220ms ease;
+}
+
+/* opaque dropdown for every theme */
+.theme-dropdown-panel {
+  background-color: rgba(8, 10, 20, 0.96) !important;
+  backdrop-filter: none !important;
+  border: 1px solid rgba(255,255,255,0.04);
+}
+
+/* utility sizes used in components */
+.size-20 { width: 5rem; height: 5rem; }
+.size-16 { width: 4rem; height: 4rem; }
+.size-14 { width: 3.5rem; height: 3.5rem; }
+.size-12 { width: 3rem; height: 3rem; }
+
+/* small improvement for buttons */
+.btn-neon {
+  background: linear-gradient(90deg, #7c3aed 0%, #ff4d9d 100%);
+  color: white;
+}
+
+/* subtle hover glow */
+.hover-glow:hover { box-shadow: 0 8px 40px rgba(124,58,237,0.18); transform: translateY(-2px); transition: all 180ms ease; }
+
+/* ensure cards are consistent */
+.card-neon {
+  background: linear-gradient(180deg, rgba(6,6,16,0.7) 0%, rgba(8,10,20,0.85) 100%);
+  border: 1px solid rgba(255,255,255,0.04);
+  border-radius: 1rem;
+}

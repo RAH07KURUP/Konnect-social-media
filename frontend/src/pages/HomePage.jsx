@@ -1,3 +1,4 @@
+// HomePage.jsx
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import {
@@ -49,12 +50,16 @@ const HomePage = () => {
   }, [outgoingFriendReqs]);
 
   return (
-    <div className="p-4 sm:p-6 lg:p-8">
-      <div className="container mx-auto space-y-10">
+    <div className="p-6 lg:p-8">
+      <div className="mx-auto max-w-6xl space-y-10">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Your Friends</h2>
-          <Link to="/notifications" className="btn btn-outline btn-sm">
-            <UsersIcon className="mr-2 size-4" />
+          <div>
+            <h2 className="text-3xl font-extrabold tracking-tight text-white">Your Friends</h2>
+            <p className="text-sm text-gray-300 mt-1">Contacts you connect with frequently</p>
+          </div>
+
+          <Link to="/notifications" className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#2a1240] bg-gradient-to-r from-[#0b0b12]/50 to-[#140d22]/30 hover:from-[#151026]/70 transition">
+            <UsersIcon className="h-5 w-5 text-[#7c3aed]" />
             Friend Requests
           </Link>
         </div>
@@ -66,7 +71,7 @@ const HomePage = () => {
         ) : friends.length === 0 ? (
           <NoFriendsFound />
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {friends.map((friend) => (
               <FriendCard key={friend._id} friend={friend} />
             ))}
@@ -77,10 +82,8 @@ const HomePage = () => {
           <div className="mb-6 sm:mb-8">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div>
-                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Connect with New Friends</h2>
-                <p className="opacity-70">
-                  Find your kind of people and start connecting.
-                </p>
+                <h2 className="text-3xl font-extrabold tracking-tight text-white">Connect with New Friends</h2>
+                <p className="text-sm text-gray-300 mt-1">Find people with similar interests and start connecting.</p>
               </div>
             </div>
           </div>
@@ -90,11 +93,9 @@ const HomePage = () => {
               <span className="loading loading-spinner loading-lg" />
             </div>
           ) : recommendedUsers.length === 0 ? (
-            <div className="card bg-base-200 p-6 text-center">
-              <h3 className="font-semibold text-lg mb-2">No recommendations available</h3>
-              <p className="text-base-content opacity-70">
-                Check back later for new friends!
-              </p>
+            <div className="rounded-2xl bg-[#07102a] border border-[#1b0d2b] p-6 text-center">
+              <h3 className="font-semibold text-lg text-white mb-2">No recommendations available</h3>
+              <p className="text-gray-300">Check back later for new friends!</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -104,57 +105,58 @@ const HomePage = () => {
                 return (
                   <div
                     key={user._id}
-                    className="card bg-base-200 hover:shadow-lg transition-all duration-300"
+                    className="rounded-2xl bg-[#07102a] border border-[#2a1240] hover:shadow-neon transition-all duration-200 p-5 flex flex-col justify-between"
                   >
-                    <div className="card-body p-5 space-y-4">
-                      <div className="flex items-center gap-3">
-                        <div className="avatar size-16 rounded-full">
-                          <img src={user.profilePic} alt={user.fullName} />
+                    <div>
+                      <div className="flex items-center gap-4">
+                        <div className="w-16 h-16 rounded-full overflow-hidden ring-2 ring-[#7c3aed]/20">
+                          <img src={user.profilePic} alt={user.fullName} className="object-cover w-full h-full" />
                         </div>
 
                         <div>
-                          <h3 className="font-semibold text-lg">{user.fullName}</h3>
+                          <h3 className="font-semibold text-lg text-white">{user.fullName}</h3>
                           {user.location && (
-                            <div className="flex items-center text-xs opacity-70 mt-1">
-                              <MapPinIcon className="size-3 mr-1" />
+                            <div className="flex items-center text-xs text-gray-300 mt-1">
+                              <MapPinIcon className="h-4 w-4 mr-1 opacity-70" />
                               {user.location}
                             </div>
                           )}
                         </div>
                       </div>
 
-                      {/* Languages with flags */}
-                      <div className="flex flex-wrap gap-1.5">
-                        <span className="badge badge-secondary">
+                      <div className="flex flex-wrap gap-2 mt-4">
+                        <span className="px-3 py-1 rounded-full bg-gradient-to-r from-[#7c3aed]/20 to-[#4cc9f0]/10 text-xs text-indigo-200 inline-flex items-center gap-2">
                           {getLanguageFlag(user.nativeLanguage)}
                           Native: {capitialize(user.nativeLanguage)}
                         </span>
-                        <span className="badge badge-outline">
+
+                        <span className="px-3 py-1 rounded-full border border-[#2a1240] text-xs text-gray-200 inline-flex items-center gap-2">
                           {getLanguageFlag(user.learningLanguage)}
                           Learning: {capitialize(user.learningLanguage)}
                         </span>
                       </div>
 
-                      {user.bio && <p className="text-sm opacity-70">{user.bio}</p>}
+                      {user.bio && <p className="text-sm text-gray-300 mt-3">{user.bio}</p>}
+                    </div>
 
-                      {/* Action button */}
+                    <div className="mt-4">
                       <button
-                        className={`btn w-full mt-2 ${
-                          hasRequestBeenSent ? "btn-disabled" : "btn-primary"
-                        } `}
+                        className={`w-full px-4 py-3 rounded-lg text-sm font-medium transition ${
+                          hasRequestBeenSent ? "bg-white/6 text-gray-300 cursor-default" : "bg-gradient-to-r from-[#7c3aed] to-[#ff4d9d] text-white shadow-md hover:opacity-95"
+                        }`}
                         onClick={() => sendRequestMutation(user._id)}
                         disabled={hasRequestBeenSent || isPending}
                       >
                         {hasRequestBeenSent ? (
-                          <>
-                            <CheckCircleIcon className="size-4 mr-2" />
+                          <span className="inline-flex items-center gap-2">
+                            <CheckCircleIcon className="h-4 w-4" />
                             Request Sent
-                          </>
+                          </span>
                         ) : (
-                          <>
-                            <UserPlusIcon className="size-4 mr-2" />
+                          <span className="inline-flex items-center gap-2">
+                            <UserPlusIcon className="h-4 w-4" />
                             Send Friend Request
-                          </>
+                          </span>
                         )}
                       </button>
                     </div>

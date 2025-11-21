@@ -1,62 +1,45 @@
-import { Link, useLocation } from "react-router";
+import { Link } from "react-router";
 import useAuthUser from "../hooks/useAuthUser";
-import { BellIcon, LogOutIcon, ShipWheelIcon } from "lucide-react";
+import { BellIcon, HeartHandshake, LogOutIcon } from "lucide-react";
 import ThemeSelector from "./ThemeSelector";
 import useLogout from "../hooks/useLogout";
 
 const Navbar = () => {
   const { authUser } = useAuthUser();
-  const location = useLocation();
-  const isChatPage = location.pathname?.startsWith("/chat");
-
-  // const queryClient = useQueryClient();
-  // const { mutate: logoutMutation } = useMutation({
-  //   mutationFn: logout,
-  //   onSuccess: () => queryClient.invalidateQueries({ queryKey: ["authUser"] }),
-  // });
-
   const { logoutMutation } = useLogout();
 
   return (
-    <nav className="bg-base-200 border-b border-base-300 sticky top-0 z-30 h-16 flex items-center">
+    <nav className="sticky top-0 z-40 bg-[#050615]/80 border-b border-[#2a1a49] backdrop-blur-sm">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-end w-full">
-          {/* LOGO - ONLY IN THE CHAT PAGE */}
-          {isChatPage && (
-            <div className="pl-5">
-              <Link to="/" className="flex items-center gap-2.5">
-                <ShipWheelIcon className="size-9 text-primary" />
-                <span className="text-3xl font-bold font-mono bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary  tracking-wider">
-                  Konnect
-                </span>
-              </Link>
-            </div>
-          )}
+        <div className="flex items-center h-16 gap-4">
+          <Link to="/" className="flex items-center gap-3">
+            <HeartHandshake/>
+            <span className="hidden sm:inline text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#7c3aed] to-[#ff4d9d]">Konnect</span>
+          </Link>
 
-          <div className="flex items-center gap-3 sm:gap-4 ml-auto">
-            <Link to={"/notifications"}>
-              <button className="btn btn-ghost btn-circle">
-                <BellIcon className="h-6 w-6 text-base-content opacity-70" />
+          <div className="ml-auto flex items-center gap-3">
+            <Link to="/notifications">
+              <button className="p-2 rounded-full hover:bg-white/5 transition shadow-neon" title="Notifications">
+                <BellIcon className="w-5 h-5 text-sky-300" />
               </button>
             </Link>
-          </div>
 
-          {/* TODO */}
-          <ThemeSelector />
+            <ThemeSelector />
 
-          <div className="avatar">
-            <div className="w-9 rounded-full">
-              <img src={authUser?.profilePic} alt="User Avatar" rel="noreferrer" />
+            <div className="flex items-center gap-3 ml-2">
+              <div className="w-9 h-9 rounded-full ring-2 ring-[#7c3aed]/30 overflow-hidden">
+                <img src={authUser?.profilePic} alt="avatar" />
+              </div>
+
+              <button onClick={logoutMutation} className="p-2 rounded-full hover:bg-white/5 transition" title="Logout">
+                <LogOutIcon className="w-5 h-5 text-rose-300" />
+              </button>
             </div>
           </div>
-
-          {/* Logout button */}
-          <button className="btn btn-ghost btn-circle" onClick={logoutMutation}>
-            <LogOutIcon className="h-6 w-6 text-base-content opacity-70" />
-          </button>
         </div>
       </div>
     </nav>
   );
 };
+
 export default Navbar;

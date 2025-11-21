@@ -4,70 +4,52 @@ import { BellIcon, HeartHandshake, HomeIcon, UsersIcon } from "lucide-react";
 
 const Sidebar = () => {
   const { authUser } = useAuthUser();
-  const location = useLocation();
-  const currentPath = location.pathname;
+  const { pathname } = useLocation();
+  const currentPath = pathname;
 
   return (
-    <aside className="w-64 bg-base-200 border-r border-base-300 hidden lg:flex flex-col h-screen sticky top-0">
-      <div className="p-5 border-b border-base-300">
-        <Link to="/" className="flex items-center gap-2.5">
-          <HeartHandshake className="size-9 text-primary" />
-          <span className="text-3xl font-bold font-mono bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary  tracking-wider">
-            Konnect
-          </span>
+    <aside className="w-72 hidden lg:flex flex-col h-screen sticky top-0 bg-[#06061a] border-r border-[#2a1240] p-4">
+      <div className="mb-6">
+        <Link to="/" className="flex items-center gap-3">
+          <div className="w-10 h-10 grid place-items-center rounded-xl" style={{background: "linear-gradient(135deg,#7c3aed,#ff4d9d)"}}>
+            <HeartHandshake className="w-5 h-5 text-white" />
+          </div>
+
+          <div>
+            <div className="text-lg font-bold text-white">Konnect</div>
+            <div className="text-xs text-gray-400">A modern space to connect</div>
+          </div>
         </Link>
       </div>
 
-      <nav className="flex-1 p-4 space-y-1">
-        <Link
-          to="/"
-          className={`btn btn-ghost justify-start w-full gap-3 px-3 normal-case ${
-            currentPath === "/" ? "btn-active" : ""
-          }`}
-        >
-          <HomeIcon className="size-5 text-base-content opacity-70" />
-          <span>Home</span>
-        </Link>
-
-        <Link
-          to="/friends"
-          className={`btn btn-ghost justify-start w-full gap-3 px-3 normal-case ${
-            currentPath === "/friends" ? "btn-active" : ""
-          }`}
-        >
-          <UsersIcon className="size-5 text-base-content opacity-70" />
-          <span>Friends</span>
-        </Link>
-
-        <Link
-          to="/notifications"
-          className={`btn btn-ghost justify-start w-full gap-3 px-3 normal-case ${
-            currentPath === "/notifications" ? "btn-active" : ""
-          }`}
-        >
-          <BellIcon className="size-5 text-base-content opacity-70" />
-          <span>Notifications</span>
-        </Link>
+      <nav className="flex-1 space-y-3">
+        <NavItem to="/" label="Home" icon={<HomeIcon />} active={currentPath === "/"} />
+        <NavItem to="/friends" label="Friends" icon={<UsersIcon />} active={currentPath === "/friends"} />
+        <NavItem to="/notifications" label="Notifications" icon={<BellIcon />} active={currentPath === "/notifications"} />
       </nav>
 
-      {/* USER PROFILE SECTION */}
-      <div className="p-4 border-t border-base-300 mt-auto">
+      <div className="mt-auto pt-4 border-t border-[#1a0e2d]">
         <div className="flex items-center gap-3">
-          <div className="avatar">
-            <div className="w-10 rounded-full">
-              <img src={authUser?.profilePic} alt="User Avatar" />
-            </div>
+          <div className="w-12 h-12 rounded-full overflow-hidden ring-2 ring-[#ff4d9d]/20">
+            <img src={authUser?.profilePic} alt="user" />
           </div>
-          <div className="flex-1">
-            <p className="font-semibold text-sm">{authUser?.fullName}</p>
-            <p className="text-xs text-success flex items-center gap-1">
-              <span className="size-2 rounded-full bg-success inline-block" />
-              Online
-            </p>
+          <div>
+            <div className="font-semibold text-white text-sm">{authUser?.fullName}</div>
+            <div className="text-xs text-emerald-400">Online</div>
           </div>
         </div>
       </div>
     </aside>
   );
 };
+
+function NavItem({ to, label, icon, active }) {
+  return (
+    <Link to={to} className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-all ${active ? "bg-gradient-to-r from-[#7c3aed]/20 to-[#ff4d9d]/18 text-white ring-1 ring-[#7c3aed]/20" : "text-gray-200 hover:bg-white/3"}`}>
+      <div className="w-6 h-6 flex items-center justify-center text-sky-300">{icon}</div>
+      <span className="text-sm">{label}</span>
+    </Link>
+  );
+}
+
 export default Sidebar;

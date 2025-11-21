@@ -7,39 +7,37 @@ const ThemeSelector = () => {
 
   return (
     <div className="dropdown dropdown-end">
-      {/* DROPDOWN TRIGGER */}
       <button tabIndex={0} className="btn btn-ghost btn-circle">
         <PaletteIcon className="size-5" />
       </button>
 
       <div
         tabIndex={0}
-        className="dropdown-content mt-2 p-1 shadow-2xl bg-base-200 backdrop-blur-lg rounded-2xl
-        w-56 border border-base-content/10 max-h-80 overflow-y-auto"
+        className="
+          dropdown-content mt-3 shadow-xl rounded-xl w-56 p-2
+          bg-base-200 border border-base-300
+        "
       >
         <div className="space-y-1">
-          {THEMES.map((themeOption) => (
+          {THEMES.map(t => (
             <button
-              key={themeOption.name}
+              key={t.name}
               className={`
-              w-full px-4 py-3 rounded-xl flex items-center gap-3 transition-colors
-              ${
-                theme === themeOption.name
-                  ? "bg-primary/10 text-primary"
-                  : "hover:bg-base-content/5"
-              }
-            `}
-              onClick={() => setTheme(themeOption.name)}
+                w-full px-4 py-3 rounded-xl flex items-center gap-3 
+                transition-colors
+                ${theme === t.name ? "bg-primary/20 text-primary" : "hover:bg-base-300"}
+              `}
+              onClick={() => setTheme(t.name)}
             >
               <PaletteIcon className="size-4" />
-              <span className="text-sm font-medium">{themeOption.label}</span>
-              {/* THEME PREVIEW COLORS */}
+              <span className="text-sm font-medium">{t.label}</span>
+
               <div className="ml-auto flex gap-1">
-                {themeOption.colors.map((color, i) => (
+                {t.colors.map((c, i) => (
                   <span
                     key={i}
                     className="size-2 rounded-full"
-                    style={{ backgroundColor: color }}
+                    style={{ backgroundColor: c }}
                   />
                 ))}
               </div>
@@ -50,4 +48,5 @@ const ThemeSelector = () => {
     </div>
   );
 };
+
 export default ThemeSelector;
