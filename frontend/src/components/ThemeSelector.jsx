@@ -3,10 +3,6 @@ import { PaletteIcon } from "lucide-react";
 import { THEMES } from "../constants";
 import { useThemeStore } from "../store/useThemeStore";
 
-/**
- * ThemeSelector - sets data-theme on <html> and persists selection
- * Dropdown is opaque (class theme-dropdown-panel) and theme-aware
- */
 
 const ThemeSelector = () => {
   const [open, setOpen] = useState(false);
