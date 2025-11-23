@@ -45,7 +45,7 @@ const LoginPage = () => {
                 <input
                   type="email"
                   className="input input-bordered bg-white/5 border-white/10 text-white placeholder-white/40"
-                  placeholder="hello@example.com"
+                  placeholder="abc@domain.com"
                   value={loginData.email}
                   onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
                   required
@@ -57,7 +57,7 @@ const LoginPage = () => {
                 <input
                   type="password"
                   className="input input-bordered bg-white/5 border-white/10 text-white placeholder-white/40"
-                  placeholder="••••••••"
+                  placeholder="******"
                   value={loginData.password}
                   onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
                   required

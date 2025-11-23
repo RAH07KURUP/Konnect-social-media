@@ -56,7 +56,7 @@ const SignUpPage = () => {
                 <input
                   type="text"
                   className="input input-bordered bg-white/5 border-white/10 text-white placeholder-white/40"
-                  placeholder="John Doe"
+                  placeholder="Enter your Full Name"
                   value={signupData.fullName}
                   onChange={(e) =>
                     setSignupData({ ...signupData, fullName: e.target.value })
@@ -71,7 +71,7 @@ const SignUpPage = () => {
                 <input
                   type="email"
                   className="input input-bordered bg-white/5 border-white/10 text-white placeholder-white/40"
-                  placeholder="john@gmail.com"
+                  placeholder="abc@domain.com"
                   value={signupData.email}
                   onChange={(e) =>
                     setSignupData({ ...signupData, email: e.target.value })
@@ -86,7 +86,7 @@ const SignUpPage = () => {
                 <input
                   type="password"
                   className="input input-bordered bg-white/5 border-white/10 text-white placeholder-white/40"
-                  placeholder="••••••••"
+                  placeholder="******"
                   value={signupData.password}
                   onChange={(e) =>
                     setSignupData({ ...signupData, password: e.target.value })
